@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<extension key="ca.civicrm.testsite" type="module">
+  <file>testsite</file>
+  <name>Test Site Helper</name>
+  <description>A helper extension when running a test site.</description>
+  <license>AGPL-3.0</license>
+  <maintainer>
+    <author>Alan Dixon</author>
+    <email>info@blackflysolutions.ca</email>
+  </maintainer>
+  <urls>
+    <url desc="Main Extension Page">https://github.com/adixon/ca.civicrm.testsite/</url>
+    <url desc="Documentation">https://github.com/adixon/ca.civicrm.testsite/blob/master/README.md</url>
+</url>
+    <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
+  </urls>
+  <releaseDate>2016-05-17</releaseDate>
+  <version>1.0</version>
+  <develStage>alpha</develStage>
+  <compatibility>
+    <ver>4.6</ver>
+    <ver>4.7</ver>
+  </compatibility>
+  <comments>This is a new, undeveloped module</comments>
+  <civix>
+    <namespace>CRM/Testsite</namespace>
+  </civix>
+</extension>
