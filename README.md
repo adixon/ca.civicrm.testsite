@@ -2,7 +2,7 @@
 
 This is an new extension, in development, designed to be a helper extension for testing CiviCRM sites, especially for testing CiviCRM upgrades.
 
-Do not enable this on a production site, only on a copy. You'll see a new navigation menu item "Test Site" where all the action is.
+Do not enable this on a production site, only on a disposable copy. You'll see a new navigation menu item "Test Site" where all the action is.
 
 Here's the original roadmap:
 
@@ -32,7 +32,7 @@ This can have two parts:
 The latter part (environment variable `isProductionEnvironment`) is already in progress in core, see [CRM-18231](https://issues.civicrm.org/jira/browse/CRM-18231) and 
 [Moving CiviCRM from production to staging](https://wiki.civicrm.org/confluence/display/CRMDOC/Moving+CiviCRM+instance+from+production+to+staging).
 
-> Current status: there's now a "Deployment Environment" (string) system setting that can be set from the TestSite configuration page, it has no effect.
+> Current status: there's now a "Deployment Environment" (string) system setting that can be set from the TestSite configuration page, it has no effect. There's also an annoying CRM.alert reminding you that you're on a test site on every page. What it should do is set the isProductionEnvironment to false whenever you switch away from production, and probably prevent you from setting it back to production.
 
 
 ## Remove live payment processor credentials, disable outgoing mail
