@@ -1,0 +1,6 @@
+{htxt id="deployment_environment"}
+{ts}Configure a bunch of settings based on common use cases!{/ts}
+{/htxt}
+{htxt id="anonymize"}
+{ts}Run some SQL to anonymize a lot of contact data in your database.{/ts}
+{/htxt}

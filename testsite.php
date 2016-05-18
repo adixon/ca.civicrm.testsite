@@ -26,11 +26,51 @@ function testsite_civicrm_xmlMenu(&$files) {
  * Implements hook_civicrm_install().
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_install
+ *
+ * Create a reasonable set of deployment environments if we don't have one already.
  */
 function testsite_civicrm_install() {
   _testsite_civix_civicrm_install();
+  /* test for and optionally create an option group for deployment environment settings */
+  $option_group = array();
+  try {
+    $option_group = civicrm_api3('OptionGroup', 'getsingle', array('name' => 'deployment_environment'));
+  }
+  catch (CiviCRM_API3_Exception $e) {
+    // $error = $e->getMessage();
+  }
+  if (empty($option_group['id'])) {
+    try {
+      $option_group = civicrm_api3('OptionGroup', 'create', array(
+        'name' => 'deployment_environment',
+        'title' => 'Deployment Environment',
+        'active' => 1,
+        'description' => 'Production, staging, testing, or development.',
+      ));
+    }
+    catch (CiviCRM_API3_Exception $e) {
+      // $error = $e->getMessage();
+    }
+  }
+  if (!empty($option_group['id'])) {
+    try {
+      $option_value_count = civicrm_api3('OptionValue', 'getcount', array('option_group_id' => 'deployment_environment'));
+    }
+    catch (CiviCRM_API3_Exception $e) {
+      // $error = $e->getMessage();
+    }
+    if (empty($option_value_count)) {
+      foreach(array('production' => 'Production', 'staging' => 'Staging', 'development' => 'Development', 'testing' => 'Testing') as $value => $label) {
+        $result = civicrm_api3('OptionValue', 'create', array(
+          'option_group_id' => 'deployment_environment',
+          'value' => $value,
+          'label' => $label,
+          'is_default' => ($value == 'production' ? '1' : '0'),
+        ));
+      }
+    }
+  }
 }
-
 /**
  * Implements hook_civicrm_uninstall().
  *
@@ -142,14 +182,33 @@ function testsite_civicrm_preProcess($formName, &$form) {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_navigationMenu
  *
+ */
 function testsite_civicrm_navigationMenu(&$menu) {
   _testsite_civix_insert_navigation_menu($menu, NULL, array(
-    'label' => ts('The Page', array('domain' => 'ca.civicrm.testsite')),
-    'name' => 'the_page',
-    'url' => 'civicrm/the-page',
-    'permission' => 'access CiviReport,access CiviContribute',
-    'operator' => 'OR',
+    'label' => ts('Test Site', array('domain' => 'ca.civicrm.testsite')),
+    'name' => 'Test Site',
+    'url' => 'civicrm/a/#/testsite',
+    'permission' => 'access CiviCRM',
     'separator' => 0,
   ));
   _testsite_civix_navigationMenu($menu);
-} // */
+} 
+
+
+/**
+ * Implementation of hook_civicrm_check
+ *
+ * Let the user know that the testsite extension is enabled.
+ */
+function testsite_civicrm_check(&$messages) {
+  $messages[] = new CRM_Utils_Check_Message(
+    'testsite_enabled',
+    ts('The TestSite extension is enabled.'),
+    ts('Site Test'),
+    \Psr\Log\LogLevel::CRITICAL,
+    'fa-flag'
+  );
+}
+
+/* add this js on every page */
+CRM_Core_Resources::singleton()->addScriptFile('ca.civicrm.testsite', 'js/testsite.js', 10, 'page-footer');

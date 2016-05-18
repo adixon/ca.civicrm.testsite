@@ -1,0 +1,41 @@
+<div class="crm-container">
+  <div crm-ui-debug="testsiteInfo"></div>
+
+  <form name="myForm" crm-ui-id-scope>
+    <div class="help">
+      <p>{{ts('Your site is in test mode.')}}</p>
+
+      <p>{{ts('To view more debugging information, edit the URL and include "?angularDebug=1".')}}</p>
+    </div>
+
+    <div crm-ui-accordion="{title: ts('Status')}">
+      <p ng-show="myVersion.version">{{ ts('CiviCRM Version: %1', {1: myVersion.version}) }}</p>
+      <p ng-show="myVersion.uf">{{ ts('CMS: %1', {1: myVersion.uf}) }}</p>
+      <p ng-show="mySettings.deployment_environment.name">{{ ts('Deployment environment: %1', {1: mySettings.deployment_environment.name}) }}</p>
+    </div>
+
+    <div crm-ui-accordion="{title: ts('Modify Options')}">
+      <div class="crm-block">
+        <div class="crm-group">
+          <div crm-ui-field="{name: 'deployment_environment', title: ts('Deployment Environment'), help: hs('deployment_environment')}">
+            <select
+              crm-ui-id="myForm.deployment_environment"
+              name="deployment_environment"
+              ng-model="mySettings.deployment_environment"
+              ng-options="option.name for option in data.deployment_environment_options track by option.id"
+              class="crm-form-select"
+              placeholder="{{ts('Deployment Environment')}}"
+              />
+            <button ng-click="updateEnvironment()">{{ts('Modify')}}</button>
+          </div>
+          <div crm-ui-field="{name: 'anonymize', title: ts('Anonymize'), help: hs('anonymize')}">
+            <button ng-click="anonymize()">{{ts('Anonymize')}}</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>
+
+
+</div>
