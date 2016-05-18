@@ -2,6 +2,8 @@
 
 This is an new extension, in development, designed to be a helper extension for testing CiviCRM sites, especially for testing CiviCRM upgrades.
 
+Do not enable this on a production site, only on a copy. You'll see a new navigation menu item "Test Site" where all the action is.
+
 Here's the original roadmap:
 
 1. Contact data obfuscation
@@ -18,7 +20,7 @@ There is prior work on this:
 
 Contact data obfuscation is an example of a task which might need to happen moving a DB from production to development (local development environments might not need personal data or even a full size DB), but which would not be wanted when moving from production to staging (so review in a live hosting environment can be made accurately and with a complete dataset).
 
-> Current status: there's a new api job 'anonymize' that can be run from a button in the Testsite configuration page. It runs the CiviCRM part of Compucorp's SQL scripts.
+> Current status: there's a new api job 'anonymize' that can be run from a button in the Testsite configuration page. It runs the CiviCRM part of Compucorp's SQL scripts. This script also removes live payment processor credentials.
 
 ## Environment switching
 
